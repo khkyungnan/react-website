@@ -2,7 +2,6 @@
 const express = require('express');
 const oracledb = require('oracledb');
 const cors = require('cors');
-
 const app = express();
 const PORT = 5002;
 
