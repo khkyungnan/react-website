@@ -22,6 +22,9 @@ const Header = () => {
             <Nav.Link as={Link} to="/todos">
               Todo List
             </Nav.Link>
+            <Nav.Link as={Link} to="/weather">
+              Weather Search
+            </Nav.Link>
             <NavDropdown title="Games" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/numberGuessingGame">
                 Number Guessing Game
