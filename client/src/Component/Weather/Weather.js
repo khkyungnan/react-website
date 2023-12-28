@@ -37,6 +37,12 @@ function Weather() {
       {loading && <p>검색중...</p>}
       {weather.city_name && (
         <div>
+          {weather.weather.icon && (
+            <img
+              src={`https://www.weatherbit.io/static/img/icons/${weather.weather.icon}.png`}
+              alt="weather Icon"
+            />
+          )}
           <h2>{weather.city_name}</h2>
           <p>온도: {weather.temp} °C</p>
           <p>습도: {weather.rh}%</p>
