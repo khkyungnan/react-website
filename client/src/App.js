@@ -7,7 +7,7 @@ import Quiz from './Component/Game/Quiz';
 import Header from './Component/Header';
 import Footer from './Component/Footer';
 import Todo from './Component/Todo/Todo';
-import Weather from './Component/Weather/Weather';
+import WeatherSearch from './Component/Weather/WeatherSearch';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
               element={<NumberGuessingGame />}
             />
             <Route path="/quiz" element={<Quiz />} />
-            <Route path="/weather" element={<Weather />} />
+            <Route path="/weather" element={<WeatherSearch />} />
           </Routes>
         </div>
 
