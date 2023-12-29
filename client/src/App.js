@@ -6,7 +6,7 @@ import NumberGuessingGame from './Component/Game/NumberGuessingGame';
 import Quiz from './Component/Game/Quiz';
 import Header from './Component/Header';
 import Footer from './Component/Footer';
-import Todo from './Component/Todo/Todo';
+import Todo from './Component/Todo/TodoNoCss';
 import Weather from './Component/Weather/Weather';
 import WeatherSearch from './Component/Weather/WeatherSearch';
 

@@ -8,6 +8,9 @@ export default function TodoNoCss() {
   //할 일 갯 수
   const [count, setCount] = useState(0);
 
+  /********** 출시일 **********/
+  const [date, setdate] = useState('');
+
   //수정할 할 일
   // 수정할 일 의 번호의 최초값을 0으로 주면
   // 0 번 째 인덱스에 있는 할 일을 수정하게 되므로
@@ -17,9 +20,18 @@ export default function TodoNoCss() {
 
   //할일 추가하는 버튼 함수 생성하기
   const addTodo = () => {
+    /***날짜와 출시일 모두 입력해달라는 경고문 생성***/
+    if (!date || !newTodo) {
+      alert('출시일과 할 일을 입력해주세요.');
+      return;
+    }
+
     //만약에 이미 존재하는 할 일 일경우 추가되지 못하도록 방지
     if (!todos.includes(newTodo)) {
-      setTodos([...todos, newTodo]);
+      //만약에 두 개 이상 저장할 경우 {} 사용해서 저장
+      setTodos([...todos, { newTodo, date }]);
+
+      //setTodos([...todos, newTodo]);
       setNewTodo('');
       // 카운트는 선택
       setCount((count) => count + 1);
@@ -27,8 +39,6 @@ export default function TodoNoCss() {
       alert('이미 존재하는 할 일 입니다!');
     }
   };
-
-  //위 상단 타이틀에서 카운트 갯수 넣어주는 useEffect
 
   //삭제
   const removeTodo = (index) => {
@@ -44,13 +54,28 @@ export default function TodoNoCss() {
   //              todo : 수정할 일 내용 갖고오기
   const editStart = (index, todo) => {
     setEditingIndex(index);
-    setEditTodo(todo);
+
+    /*
+    수정을 진행할 경우 할 일 목록에 있는 할일만 가져올예정
+    왜냐하면 날짜는 수정하고 싶을 수 있을 수 있으니 그대로 가져오지 않은 것
+     */
+    setEditTodo(todo.newTodo);
+    // setEditTodo(todo);
   };
 
   //수정한 내용 저장하는 버튼
   const saveEdit = () => {
     const updateTodos = [...todos];
-    updateTodos(editingIndex);
+    //작성일과 수정한 내용을 모두 저장하기 위해서는 배열을 이용해야함
+    //updateTodos[editingIndex] = {newTodo: editTodo, date};
+    //newTodo 의 경우 수정한 내용을 새로 넣어주기 때문에 값 대칭을 해준것
+    //date 같은 경우 처음부터 선택하게 만들 예정이기 때문에
+    //date만 넣어줌
+    updateTodos[editingIndex] = { newTodo: editTodo, date };
+    //배열에 작성한 내용을 저장해주는 set 작성
+    setTodos(updateTodos);
+
+    //updateTodos(editingIndex);
     setEditingIndex(null);
   };
 
@@ -59,6 +84,12 @@ export default function TodoNoCss() {
     setEditingIndex(null);
     setEditTodo('');
   };
+
+  //선택
+  useEffect(() => {
+    document.title = `할 일 갯수 : ${count}`;
+  }, [count]);
+
   return (
     <>
       <h3>할 일 목록</h3>
@@ -67,6 +98,11 @@ export default function TodoNoCss() {
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setdate(e.target.value)}
         />
         <button onClick={addTodo}>할 일 추가하기</button>
       </div>
@@ -86,7 +122,7 @@ export default function TodoNoCss() {
               </div>
             ) : (
               <div>
-                {todo}
+                {`${todo.newTodo} 출시일 : ${todo.date}`}
                 <button onClick={() => editStart(index, todo)}>수정하기</button>
                 <button onClick={() => removeTodo(index)}>삭제하기</button>
               </div>
